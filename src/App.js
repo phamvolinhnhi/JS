@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+//Pages
+import Home from './pages/Home';
+import Login from "./pages/Login"
+import Signup from "./pages/Signup"
+import Dashboard from "./pages/Dashboard"
+import EmailSent from "./pages/EmailSent"
 
-function App() {
+//styled componetns
+import {StyledContainer} from './components/Style';
+
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+
+//auth & redux
+import AuthRoute from "./components/AuthRoute";
+import BasicRoute from './components/BasicRoute';
+import { connect } from 'react-redux';
+
+function App({checked}) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      {checked && 
+      <StyledContainer>
+        <Routes>
+          <Route path='/emailsent/:userEmail' element={<EmailSent/>}/>
+          <Route path='/signup' element={<Signup/>}/>
+          <Route path='/login/:userEmail?' element={<Login/>}/>
+          <Route path='/dashboard' element={<Dashboard/>}/>
+          <Route path='/' element={<Home/>}/>
+        </Routes>
+      </StyledContainer>
+      }
+    </Router>
   );
 }
+const mapStateToProps = ({session}) => ({
+  checked: session.checked,
+});
 
-export default App;
+export default connect(mapStateToProps)(App);
