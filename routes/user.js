@@ -15,4 +15,10 @@ router.put("/:id", userController.updateUser);
 
 //DELETE A BOOK
 router.delete("/:id", userController.deleteUser);
+
+//Signup
+router.post("/signup", userController.signup);
+
+router.post("/signin", userController.signin);
+
 module.exports=router;

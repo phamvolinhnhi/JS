@@ -1,4 +1,14 @@
 const{User}=require("../models/user");
+const{UserVerification}=require("../models/UserVerification");
+const nodemailer = require("nodemailer");
+
+const {v4: uuidv4} = require("uuid");
+
+//Password handler
+const bcrypt = require('bcrypt');
+
+require("dotenv").config();
+
 
 const userController = {
     //add user
@@ -63,5 +73,134 @@ const userController = {
     }
   },
 
-};
+  signup: async (req, res) => {
+    var user = new User(req.body);
+    var email = req.body.email.trim();
+    var birthday = req.body.birthday;
+    if(req.body.email == "" || req.body.password == "" || req.body.birthday == ""){
+        res.json({
+            status: "FAILED",
+            message: "Empty input fields!"
+        });
+    }
+    else if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(req.body.email)){
+        res.json({
+            status: "FAILED",
+            message: "Invalid email entered"
+        })
+    }
+    else if(req.body.password.length < 6) {
+        res.json({
+            status : "FAILED",
+            message: "Password is too short!"
+        })
+    }
+    else if(!new Date(birthday)){
+      res.json({
+        status: "FAILED",
+        message: "Invalid date of birth entered"
+      })
+    }
+    else {
+        User.find({email: req.body.email}).then(result=>{
+            if(result.length){
+                res.json({
+                    status: "FAILED",
+                    message: "User with the provided email already exists"
+                })
+            }
+            else{
+                const saltRounds = 10;
+                bcrypt.hash(req.body.password,saltRounds).then(hashedPassword=>{
+                    const newUser = new User({
+                        email: req.body.email,
+                        birthday: req.body.birthday,
+                        password: hashedPassword,
+                    });
+                    newUser.save().then(result=>{
+                        res.json({
+                            status: "SUCCESS",
+                            message: "Signup successful",
+                            data: result,
+                        })
+                    })
+                    .catch(err=>{
+                        console.log(err);
+                        res.json({
+                            status: "FAILED",
+                            message: "An error occurred while saving user account!"
+                        })
+                    })
+                })
+                .catch(err=>{
+                    res.json({
+                        status: "FAILED",
+                        message: "An error occurred while hashing password!"
+                    })
+                })
+            }
+        }).catch(err=>{
+            console.log(err);
+            res.json({
+                status: "FAILED",
+                message: "An error occurred while checking for existing user!"
+            })
+        })
+        }
+      },
+
+      signin: async (req, res) => {
+        var email = req.body.email
+        var password = req.body.password
+        if(email == "" || password == "" ){
+            res.json({
+                status: "FAILED",
+                message: "Empty credential supplied!"
+            });
+        } 
+        else {
+          User.find({email})
+          .then(data => {
+            if(data) {
+              const hashedPassword = data[0].password;
+              bcrypt.compare(password,hashedPassword).then(result => {
+                if(result) {
+                  res.json({
+                    status: "SUCCESS",
+                    message: "Signin successfull",
+                    data: data
+                  })
+                } else {
+                  res.json({
+                    status: "FAILED",
+                    message: "Invalid password entered!"
+                  })
+                }
+              })
+              .catch(err => {
+                res.json({
+                  status: "FAILED",
+                  message: "An error occured while comparing passwords"
+                })
+              })
+            } else {
+              res.json({
+                status: "FAILED",
+                message: "Invalid credentials entered!"
+              })
+            }
+          })
+          .catch(err => {
+            res.json({
+              status: "FAILED",
+              message: "An error occurred while checking for existing user"
+            })
+          })
+        }
+      }
+
+  };
+
+  
+
 module.exports=userController;

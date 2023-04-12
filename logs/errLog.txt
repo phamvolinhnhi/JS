@@ -1,0 +1,14 @@
+20230412	03:51:14	b6bda440-d858-4409-886d-fba4ab30c8da	SyntaxError: Unexpected token } in JSON at position 63
+20230412	04:05:47	36a2e165-b892-4a75-be12-2767068e9a34	ReferenceError: confrimpassword is not defined
+20230412	04:08:46	ddaab325-08be-4e60-896a-386769e3f227	TypeError: User.find is not a function
+20230412	04:09:36	6ae493fe-8a4d-4f64-9171-dd03c0f06dc2	TypeError: User.find is not a function
+20230412	04:11:15	acdf14f9-4941-47d1-865f-d5d931619a5d	TypeError: User.find is not a function
+20230412	04:15:45	27b91b87-f427-40c0-b5d9-22076254b27b	TypeError: User.find is not a function
+20230412	04:53:58	e22d6e4b-275c-4340-9c53-5a2bd9bdca74	SyntaxError: Unexpected token } in JSON at position 52
+20230412	05:29:58	4131cdc1-d0b5-4f33-af05-9aa0a01b5b69	SyntaxError: Unexpected token } in JSON at position 61
+20230412	05:54:04	04494993-6f18-4d04-801a-045f74f2b7c0	SyntaxError: Unexpected token } in JSON at position 65
+20230412	06:25:24	0cbc14f1-619a-4b62-ad1b-b7b8516b083e	Error: Not allowed by CORS
+20230412	12:10:47	5eb56ee7-b7f0-412c-87d0-bb615c89c6c8	SyntaxError: Unexpected token } in JSON at position 45
+20230412	14:19:00	13d7df7f-9782-4605-b716-d8bf499ea4ce	Error: ENOENT: no such file or directory, stat 'C:\Users\DELL\Downloads\FinalJs\views\index.html'
+20230412	14:36:43	255d1262-1e8c-4f40-bb5b-4c403441b128	Error: ENOENT: no such file or directory, stat 'C:\Users\DELL\Downloads\FinalJs\views\index.html'
+20230412	14:40:57	7fb5df1b-e906-4355-b085-9b3e0fd9311e	Error: ENOENT: no such file or directory, stat 'C:\Users\DELL\Downloads\FinalJs\views\index.html'
